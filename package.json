@@ -1,7 +1,6 @@
 {
   "name": "r6-challenge-picker",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "dependencies": {
     "express": "^4.16.2",
@@ -9,16 +8,6 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/thatguythere1010/r6-challenge-picker.git"
-  },
-  "author": "KILLMEPLS",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/thatguythere1010/r6-challenge-picker/issues"
-  },
-  "homepage": "https://github.com/thatguythere1010/r6-challenge-picker#readme"
+    "start": "node app.js"
+  }
 }
