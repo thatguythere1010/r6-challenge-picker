@@ -40,6 +40,6 @@ io.on('connection', function(socket) {
 	});
 });
 
-server.listen(80, () => {
-	console.log("listening on *:80");
+server.listen(8080, () => {
+	console.log("listening on *:8080");
 });
