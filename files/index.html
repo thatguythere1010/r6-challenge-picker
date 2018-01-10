@@ -10,18 +10,39 @@
 				  socket.emit('generateNew', null);
 				  return false;
 				});
+				$('#roundSam, #roundMax').change(function() {
+				  socket.emit('updateRound', {sam: $("#roundSam").val(), max: $("#roundMax").val()});
+				});
 				socket.on("result", function(data) {
 					console.log(data);
 					$("#challenge1").val(data.challenge1);
 					$("#challenge2").val(data.challenge2);
 				});
+				socket.on("roundChange", function(data) {
+					console.log(data);
+					$("#roundSam").val(data.sam);
+					$("#roundMax").val(data.max);
+				});
 			});
 		</script>
+		<link href="/index.css" rel="stylesheet">
 	</head>
 	<body>
 		<button type="button" id="generateNew">Generate New Challenge</button>
 		<br><br>
-		<label for="challenge1" style="width=100px;">For Sam: </p><input style="width:100%" type="text" name="challenge1" id="challenge1"><br><br>
-		<label for="challenge2" style="width=100px;">For Max: </p><input style="width:100%" type="text" name="challenge2" id="challenge2">
+		<label for="challenge1" style="width=100px;">For Sam: </p>
+		<select id="roundSam">
+		  <option value="1">Round 1</option>
+		  <option value="2">Round 2</option>
+		  <option value="3">Round 3</option>
+		</select>
+		<input style="width:100%" type="text" name="challenge1" id="challenge1"><br><br>
+		<label for="challenge2" style="width=100px;">For Max: </p>
+		<select id="roundMax">
+		  <option value="1">Round 1</option>
+		  <option value="2">Round 2</option>
+		  <option value="3">Round 3</option>
+		</select>
+		<input style="width:100%" type="text" name="challenge2" id="challenge2">
 	</body>
 </html>
