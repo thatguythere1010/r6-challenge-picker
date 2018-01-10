@@ -35,17 +35,19 @@ app.get('/', function(req, res) {
 
 io.on('connection', function(socket) {
 	socket.on('generateNew', function() {
-		console.log("updating...");
-		pastebin.getPaste('ZcV7pqsR').then(function (paste) {
+		console.log("Generating new...");
+		pastebin.getPaste('ZcV7pqsR').then(function(paste) {
 			list = shuffle(paste.split("\n"));
 			data = {};
 			data.challenge1 = list[0];
 			data.challenge2 = list[1];
 			io.emit('result', data);
+		}).error(function(err) {
+			console.log("Error caught!");
 		});
 	});
 });
 
 server.listen(server_port, () => {
-	console.log(`listening on ${server_ip_address}:${server_port}`);
+	console.log(`Listening on ${server_ip_address}:${server_port}!`);
 });
