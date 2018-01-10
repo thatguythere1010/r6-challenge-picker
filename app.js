@@ -74,7 +74,7 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-	if (list.length == 0) {
+	if (list.length === 0) {
 		pastebin.getPaste('ZcV7pqsR').then(function(paste) {
 			list = shuffle(paste.split("\n"));
 			lastUpdate = new Date().toJSON().replace(/T/, " ").replace(/Z/, "").replace(/\.\d\d\d/, "");
