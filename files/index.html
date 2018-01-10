@@ -10,9 +10,9 @@
 				  socket.emit('generateNew', null);
 				  return false;
 				});
-				$('#roundSam, #roundMax').change(function() {
-				  socket.emit('updateRound', {sam: $("#roundSam").val(), max: $("#roundMax").val()});
-				});
+				//$('#roundSam, #roundMax').change(function() {
+				//  socket.emit('updateRound', {sam: $("#roundSam").val(), max: $("#roundMax").val()});
+				//});
 				socket.on("result", function(data) {
 					console.log(data);
 					$("#challenge1").val(data.challenge1);
