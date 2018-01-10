@@ -42,7 +42,7 @@ io.on('connection', function(socket) {
 			data.challenge1 = list[0];
 			data.challenge2 = list[1];
 			io.emit('result', data);
-		}).error(function(err) {
+		}).fail(function(err) {
 			console.log("Error caught!");
 		});
 	});
