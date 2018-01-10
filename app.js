@@ -3,10 +3,12 @@ var express = require('express'),
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
+var PastebinAPI = require('pastebin-js'),
+    pastebin = new PastebinAPI('3cc5c6cbd8d898bcce52a24796713011');
 
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
-var list = ["Hip-fire only", "No ability use", "Parkinson's (constant screen shake", "Use ability non-lethally (if possible) on a teammate", "Rambo (first to peek, no slow peeking, always moving at least at walking pace)", "On attack, destroy all drones. On defense, destroy all cameras.", "Try, using any means, as hard as you can to get team killed by another player (can't inform voice chat)", "Can't shoot enemies (only abilites/grenades can harm)", "Secondary only", "Only auto reload (no manually pressing 'r')", "On attack, no breaking barricades. On defense, no reinforcing or ability placing.", "Actively disobey any command recieved from a teammate", "Throw the game in a creative manner (preferably involving teammates somehow)", "Mr. President a teammate for the entire game (not just round), and use yourself as a human shield", "Misinform teammates as much as possible", "Everything is your fault. Always apologise. (entire game)", "Hug the objective.", "SWEET FREEDOM!"];
+var list = ["ERROR", "ERROR"]
 
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -34,11 +36,13 @@ app.get('/', function(req, res) {
 io.on('connection', function(socket) {
 	socket.on('generateNew', function() {
 		console.log("updating...");
-		list = shuffle(list);
-		data = {};
-		data.challenge1 = list[0];
-		data.challenge2 = list[1];
-		io.emit('result', data);
+		pastebin.getPaste('ZcV7pqsR').then(function (paste) {
+			list = shuffle(paste.split("\n"));
+			data = {};
+			data.challenge1 = list[0];
+			data.challenge2 = list[1];
+			io.emit('result', data);
+		});
 	});
 });
 

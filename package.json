@@ -4,6 +4,7 @@
   "main": "app.js",
   "dependencies": {
     "express": "^4.16.2",
+    "pastebin-js": "^0.5.1",
     "socket.io": "^2.0.4"
   },
   "devDependencies": {},
