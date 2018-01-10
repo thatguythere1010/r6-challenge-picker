@@ -17,11 +17,13 @@
 					console.log(data);
 					$("#challenge1").val(data.challenge1);
 					$("#challenge2").val(data.challenge2);
+					$("#lastUpdate").text("Last update at: " + data.lastUpdate);
 				});
 				socket.on("roundChange", function(data) {
 					console.log(data);
 					$("#roundSam").val(data.sam);
 					$("#roundMax").val(data.max);
+					$("#lastUpdate").text("Last update at: " + data.lastUpdate);
 				});
 			});
 		</script>
@@ -29,7 +31,8 @@
 	</head>
 	<body>
 		<button type="button" id="generateNew">Generate New Challenge</button>
-		<br><br>
+		<p id="lastUpdate"></p>
+		<br>
 		<label for="challenge1" style="width=100px;">For Sam: </p>
 		<select id="roundSam">
 		  <option value="1">Round 1</option>

@@ -10,6 +10,13 @@ var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var list = [];
 var rounds = {sam: "1", max: "1"};
+var lastUpdate = "";
+
+function concatArrays(arr1, index, value) {
+	tmpArr = arr1;
+	tmpArr[index] = value;
+	return tmpArr;
+}
 
 function randomInt(low, high) {
     return Math.floor(Math.random() * (high - low) + low);
@@ -17,14 +24,15 @@ function randomInt(low, high) {
 
 function generateNew() {
 	console.log("Generating new...");
+	lastUpdate = new Date().toJSON().replace(/T/, " ").replace(/Z/, "").replace(/\.\d\d\d/, "");
 	pastebin.getPaste('ZcV7pqsR').then(function(paste) {
 		list = shuffle(paste.split("\n"));
 		data = {};
 		data.challenge1 = list[0];
 		data.challenge2 = list[1];
-		io.emit('result', data);
+		io.emit('result', concatArrays(data, "lastUpdate", lastUpdate));
 		rounds = {sam:randomInt(1, 4).toString(), max:randomInt(1, 4).toString()};
-		io.emit("roundChange", rounds);
+		io.emit("roundChange", concatArrays(rounds, "lastUpdate", lastUpdate));
 	}).fail(function(err) {
 		console.log("Error caught!\n" + err);
 	});
@@ -69,6 +77,7 @@ io.on('connection', function(socket) {
 	if (list.length == 0) {
 		pastebin.getPaste('ZcV7pqsR').then(function(paste) {
 			list = shuffle(paste.split("\n"));
+			lastUpdate = new Date().toJSON().replace(/T/, " ").replace(/Z/, "").replace(/\.\d\d\d/, "");
 			socketSetup(socket);
 		}).fail(function(err) {
 			console.log("Error caught!");
@@ -78,8 +87,8 @@ io.on('connection', function(socket) {
 		data = {};
 		data.challenge1 = list[0];
 		data.challenge2 = list[1];
-		socket.emit('result', data);
-		socket.emit("roundChange", rounds);
+		socket.emit('result', concatArrays(data, "lastUpdate", lastUpdate));
+		socket.emit("roundChange", concatArrays(rounds, "lastUpdate", lastUpdate));
 		socketSetup(socket);
 	}
 });
