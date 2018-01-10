@@ -34,6 +34,10 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function(socket) {
+	data = {};
+	data.challenge1 = list[0];
+	data.challenge2 = list[1];
+	socket.emit('result', data);
 	socket.on('generateNew', function() {
 		console.log("Generating new...");
 		pastebin.getPaste('ZcV7pqsR').then(function(paste) {
